@@ -17,14 +17,14 @@ cap.set(4,480)               #3代表图像高度，4代表图像宽度，5代�
 cap.set(5,30)                #图像高为600，宽度为480，帧率为30
 
 # 尝试连接到服务器
-try:
+try:#不确定正确执行的代码，捕获异常
     s.connect((ip, port))
-except socket.error as e:
+except socket.error as e:#捕获并处理socket.error异常
     print("Failed connecting...")  # 如果连接失败，打印错误信息
 
 # 定义一个函数用于发送图片
 def send_pic():
-    ret, frame = cap.read()  # 从摄像头读取一帧图像
+    ret, frame = cap.read()  # 从摄像头读取一帧图像，返回的是一个元组，所有有两个变量来接收
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 70]  # 设置JPEG图像的质量
     while ret:  # 如果读取图像成功
         time.sleep(0.01)  # 稍微暂停一下，以减少CPU占用率
@@ -45,7 +45,7 @@ def send_pic():
 
     s.close()  # 关闭socket连接
 
-# 如果这个脚本是作为主程序运行，而不是被导入到其他Python脚本中
+# 如果这个脚本是作为主程序运行，而不是被导入到其他Python脚本中。main函数只有在作为Python程序运行时才会执行。
 if __name__ == "__main__":
     send_pic()  # 调用send_pic函数
 
